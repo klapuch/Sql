@@ -13,11 +13,11 @@ use Tester\Assert;
 
 require __DIR__ . '/../bootstrap.php';
 
-final class AnsiMultiInsertInto extends Tester\TestCase {
+final class PgMultiInsertInto extends Tester\TestCase {
 	public function testInsertingMultipleColumns() {
 		Assert::same(
 			'INSERT INTO world (name, age) VALUES (?, :age), (?, :age2)',
-			(new Sql\AnsiMultiInsertInto(
+			(new Sql\PgMultiInsertInto(
 				'world',
 				['name' => ['?', '?'], 'age' => [':age', ':age2']]
 			))->sql()
@@ -25,4 +25,4 @@ final class AnsiMultiInsertInto extends Tester\TestCase {
 	}
 }
 
-(new AnsiMultiInsertInto())->run();
+(new PgMultiInsertInto())->run();

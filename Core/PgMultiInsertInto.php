@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql;
 
-final class AnsiMultiInsertInto implements InsertInto {
+final class PgMultiInsertInto implements InsertInto {
 	private $table;
 	private $values;
 
