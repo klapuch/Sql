@@ -6,18 +6,23 @@ namespace Klapuch\Sql;
 final class AnsiOffset implements Offset {
 	private $clause;
 	private $offset;
+	private $parameters;
 
-	public function __construct(Clause $clause, int $offset) {
+	public function __construct(Clause $clause, int $offset, array $parameters) {
 		$this->clause = $clause;
 		$this->offset = $offset;
+		$this->parameters = $parameters;
 	}
 
 	public function limit(int $limit): Limit {
-		return new AnsiLimit($this, $limit);
+		return new AnsiLimit($this, $limit, $this->parameters()->binds());
 	}
 
 	public function sql(): string {
 		return sprintf('%s OFFSET %s', $this->clause->sql(), $this->offset);
 	}
 
+	public function parameters(): Parameters {
+		return new Parameters($this->parameters);
+	}
 }

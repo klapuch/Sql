@@ -6,18 +6,20 @@ namespace Klapuch\Sql;
 final class PgConflict implements Conflict {
 	private $clause;
 	private $target;
+	private $parameters;
 
-	public function __construct(Clause $clause, array $target) {
+	public function __construct(Clause $clause, array $target, array $parameters) {
 		$this->clause = $clause;
 		$this->target = $target;
+		$this->parameters = $parameters;
 	}
 
-	public function doUpdate(array $values = []): Clause {
-		return new PgDoUpdate($this, $values);
+	public function doUpdate(array $values = [], array $parameters = []): DoUpdate {
+		return new PgDoUpdate($this, $values, $this->parameters()->bind($parameters)->binds());
 	}
 
-	public function doNothing(): Clause {
-		return new PgDoNothing($this);
+	public function doNothing(): DoNothing {
+		return new PgDoNothing($this, $this->parameters);
 	}
 
 	public function sql(): string {
@@ -28,5 +30,9 @@ final class PgConflict implements Conflict {
 				? sprintf(' (%s)', implode(', ', $this->target))
 				: ''
 		);
+	}
+
+	public function parameters(): Parameters {
+		return new Parameters($this->parameters);
 	}
 }

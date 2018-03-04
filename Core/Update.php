@@ -4,5 +4,5 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 interface Update extends Clause {
-	public function set(array $values): Set;
+	public function set(array $values, array $parameters = []): Set;
 }

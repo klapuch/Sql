@@ -14,7 +14,7 @@ use Tester\Assert;
 require __DIR__ . '/../bootstrap.php';
 
 final class AnsiUpdate extends Tester\TestCase {
-	public function testFullUpdate() {
+	public function testAllClauses() {
 		Assert::same(
 			'UPDATE world SET mood = ?, age = ? WHERE age > 50 AND age > 40 OR name LIKE ?',
 			(new Sql\AnsiUpdate('world'))
@@ -23,6 +23,19 @@ final class AnsiUpdate extends Tester\TestCase {
 				->where('age > 40')
 				->orWhere('name LIKE ?')
 				->sql()
+		);
+	}
+
+	public function testAllParameters() {
+		Assert::same(
+			['good', 25, 50, 40, 'foo'],
+			(new Sql\AnsiUpdate('world'))
+				->set(['mood' => '?', 'age' => '?'], ['good', 25])
+				->where('age > ?', [50])
+				->where('age > ?', [40])
+				->orWhere('name LIKE ?', ['foo'])
+				->parameters()
+				->binds()
 		);
 	}
 }

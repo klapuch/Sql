@@ -6,14 +6,16 @@ namespace Klapuch\Sql;
 final class AnsiSet implements Set {
 	private $clause;
 	private $values;
+	private $parameters;
 
-	public function __construct(Clause $clause, array $values) {
+	public function __construct(Clause $clause, array $values, array $parameters) {
 		$this->clause = $clause;
 		$this->values = $values;
+		$this->parameters = $parameters;
 	}
 
-	public function where(string $comparison): Where {
-		return new AnsiWhere($this, $comparison);
+	public function where(string $comparison, array $parameters = []): Where {
+		return new AnsiWhere($this, $comparison, $this->parameters()->bind($parameters)->binds());
 	}
 
 	public function sql(): string {
@@ -31,5 +33,9 @@ final class AnsiSet implements Set {
 				)
 			)
 		);
+	}
+
+	public function parameters(): Parameters {
+		return new Parameters($this->parameters);
 	}
 }

@@ -6,18 +6,20 @@ namespace Klapuch\Sql;
 final class PgInsertInto implements InsertInto {
 	private $table;
 	private $values;
+	private $parameters;
 
-	public function __construct(string $table, array $values) {
+	public function __construct(string $table, array $values, array $parameters = []) {
 		$this->table = $table;
 		$this->values = $values;
+		$this->parameters = $parameters;
 	}
 
-	public function returning(array $columns): Returning {
-		return new Returning($this, $columns);
+	public function returning(array $columns, array $parameters = []): Returning {
+		return new Returning($this, $columns, $this->parameters()->bind($parameters)->binds());
 	}
 
 	public function onConflict(array $target = []): Conflict {
-		return new PgConflict($this, $target);
+		return new PgConflict($this, $target, $this->parameters()->binds());
 	}
 
 	public function sql(): string {
@@ -27,5 +29,9 @@ final class PgInsertInto implements InsertInto {
 			implode(', ', array_keys($this->values)),
 			implode(', ', $this->values)
 		);
+	}
+
+	public function parameters(): Parameters {
+		return new Parameters($this->parameters);
 	}
 }

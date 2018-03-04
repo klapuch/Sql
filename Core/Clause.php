@@ -5,4 +5,5 @@ namespace Klapuch\Sql;
 
 interface Clause {
 	public function sql(): string;
+	public function parameters(): Parameters;
 }

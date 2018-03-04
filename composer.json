@@ -24,7 +24,6 @@
     "jakub-onderka/php-parallel-lint": "^1.0.0",
     "slevomat/coding-standard": "^4.5",
     "consistence/coding-standard": "^2.2",
-    "sebastian/phpcpd": "^4.0",
     "phing/phing": "^2.16",
     "phpstan/phpstan": "^0.9.0"
   },

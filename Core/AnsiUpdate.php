@@ -10,11 +10,15 @@ final class AnsiUpdate implements Update {
 		$this->table = $table;
 	}
 
-	public function set(array $values): Set {
-		return new AnsiSet($this, $values);
+	public function set(array $values, array $parameters = []): Set {
+		return new AnsiSet($this, $values, $this->parameters()->bind($parameters)->binds());
 	}
 
 	public function sql(): string {
 		return sprintf('UPDATE %s', $this->table);
+	}
+
+	public function parameters(): Parameters {
+		return new Parameters();
 	}
 }

@@ -7,4 +7,8 @@ final class FakeClause implements Clause {
 	public function sql(): string {
 		return '';
 	}
+
+	public function parameters(): Parameters {
+		return new Parameters();
+	}
 }
