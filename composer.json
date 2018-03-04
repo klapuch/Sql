@@ -1,0 +1,45 @@
+{
+  "name": "klapuch/sql",
+  "type": "library",
+  "description": "Easy way how to work with SQL queries",
+  "homepage": "https://github.com/klapuch/Sql",
+  "keywords": [
+    "sql",
+    "fluent",
+    "sql builder"
+  ],
+  "authors": [
+    {
+      "name": "Dominik Klapuch",
+      "email": "klapuchdominik@gmail.com",
+      "homepage": "https://www.github.com/klapuch",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.2"
+  },
+  "require-dev": {
+    "nette/tester": "^2.0",
+    "jakub-onderka/php-parallel-lint": "^1.0.0",
+    "slevomat/coding-standard": "^4.5",
+    "consistence/coding-standard": "^2.2",
+    "sebastian/phpcpd": "^4.0",
+    "phing/phing": "^2.16",
+    "phpstan/phpstan": "^0.9.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Klapuch\\Sql\\": [
+        "Core/"
+      ]
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Klapuch\\Sql\\": [
+        "Tests/"
+      ]
+    }
+  }
+}

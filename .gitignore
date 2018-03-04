@@ -1,0 +1,5 @@
+composer.lock
+vendor/*
+*.expected
+*.actual
+.config.local.ini

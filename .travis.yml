@@ -1,0 +1,28 @@
+sudo: required
+
+services:
+  - docker
+
+env:
+  - DOCKER_COMPOSE_VERSION=1.17.1
+
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
+install:
+  - docker-compose -p sql up -d --build
+
+before_script:
+  - docker exec sql_php-fpm_1 composer install --no-interaction --prefer-dist --no-scripts --no-progress --no-suggest --optimize-autoloader --classmap-authoritative
+
+script:
+  - docker exec sql_php-fpm_1 vendor/bin/phing ci
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
