@@ -8,7 +8,7 @@ final class AnsiSet implements Set {
 	private $values;
 	private $parameters;
 
-	public function __construct(Clause $clause, array $values, array $parameters) {
+	public function __construct(Clause $clause, array $values, array $parameters = []) {
 		$this->clause = $clause;
 		$this->values = $values;
 		$this->parameters = $parameters;
