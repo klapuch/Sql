@@ -33,7 +33,7 @@ final class ConjunctWhere implements Where, Selection {
 	}
 
 	public function orderBy(array $orders): OrderBy {
-		return new AnsiOrderBy($this, $orders, $this->parameters());
+		return new AnsiOrderBy($this, $orders, $this->parameters()->binds());
 	}
 
 	public function limit(int $limit): Limit {
