@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql;
 
-final class CustomJoin implements Join, Selection {
+final class CustomJoin implements Join {
 	private $clause;
 	private $type;
 	private $table;

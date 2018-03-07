@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql;
 
-interface Where extends Clause {
+interface Where extends Selection {
 	public function where(string $condition, array $parameters = []): self;
 	public function orWhere(string $condition, array $parameters = []): self;
 	public function groupBy(array $columns): GroupBy;

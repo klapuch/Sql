@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql;
 
-final class AnsiFrom implements From, Selection {
+final class AnsiFrom implements From {
 	private $clause;
 	private $tables;
 	private $parameters;

@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql;
 
-interface Join extends Clause {
+interface Join extends Selection {
 	public function join(string $type, string $table, string $condition, array $parameters = []): self;
 	public function where(string $comparison, array $parameters = []): Where;
 	public function groupBy(array $columns): GroupBy;
