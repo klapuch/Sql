@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql;
 
-final class ConjunctWhere implements Where, Selection, Filter, Sort, Paging {
+final class ConjunctWhere implements Where, Selection {
 	private $condition;
 	private $clause;
 	private $conjunct;

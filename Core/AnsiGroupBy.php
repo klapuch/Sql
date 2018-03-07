@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql;
 
-final class AnsiGroupBy implements GroupBy, Sort, Paging {
+final class AnsiGroupBy implements GroupBy {
 	private $clause;
 	private $columns;
 	private $parameters;

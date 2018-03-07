@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql;
 
-final class AnsiHaving implements Having, Sort, Paging {
+final class AnsiHaving implements Having {
 	private $clause;
 	private $condition;
 	private $parameters;
