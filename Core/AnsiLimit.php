@@ -19,6 +19,8 @@ final class AnsiLimit implements Limit {
 	}
 
 	public function sql(): string {
+		if ($this->limit === PHP_INT_MAX)
+			return $this->clause->sql();
 		return sprintf('%s LIMIT %s', $this->clause->sql(), $this->limit);
 	}
 

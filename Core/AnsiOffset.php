@@ -19,6 +19,8 @@ final class AnsiOffset implements Offset {
 	}
 
 	public function sql(): string {
+		if ($this->offset === 0)
+			return $this->clause->sql();
 		return sprintf('%s OFFSET %s', $this->clause->sql(), $this->offset);
 	}
 
