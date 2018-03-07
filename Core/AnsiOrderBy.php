@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql;
 
-final class AnsiOrderBy implements OrderBy {
+final class AnsiOrderBy implements OrderBy, Paging {
 	private $clause;
 	private $orders;
 	private $parameters;

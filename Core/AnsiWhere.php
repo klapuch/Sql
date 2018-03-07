@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql;
 
-final class AnsiWhere implements Where, Selection {
+final class AnsiWhere implements Where, Selection, Filter, Sort, Paging {
 	private $condition;
 	private $clause;
 	private $parameters;
