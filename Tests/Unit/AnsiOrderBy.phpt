@@ -13,13 +13,13 @@ use Tester\Assert;
 
 require __DIR__ . '/../bootstrap.php';
 
-final class AnsiLimit extends Tester\TestCase {
-	public function testIgnoringClauseForIntMax() {
+final class AnsiOrderBy extends Tester\TestCase {
+	public function testIgnoringClauseForEmpty() {
 		Assert::same(
 			'',
-			(new Sql\AnsiLimit(new Sql\FakeClause(), PHP_INT_MAX, []))->sql()
+			(new Sql\AnsiOrderBy(new Sql\FakeClause(), [], []))->sql()
 		);
 	}
 }
 
-(new AnsiLimit())->run();
+(new AnsiOrderBy())->run();

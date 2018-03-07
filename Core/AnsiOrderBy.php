@@ -23,6 +23,8 @@ final class AnsiOrderBy implements OrderBy {
 	}
 
 	public function sql(): string {
+		if (empty($this->orders))
+			return $this->clause->sql();
 		return sprintf(
 			'%s ORDER BY %s',
 			$this->clause->sql(),
