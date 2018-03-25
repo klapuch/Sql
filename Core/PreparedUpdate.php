@@ -13,8 +13,16 @@ final class PreparedUpdate implements Update {
 	public function set(array $values, array $parameters = []): Set {
 		return new AnsiSet(
 			$this,
-			array_combine(array_keys($values), array_fill(0, count($values), '?')),
-			$this->parameters()->bind(array_values($values))->binds()
+			array_combine(
+				array_keys($values),
+				array_map(
+					function (string $column): string {
+						return sprintf(':%s', $column);
+					},
+					array_keys($values)
+				)
+			),
+			$this->parameters()->bind($values)->binds()
 		);
 	}
 
