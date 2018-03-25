@@ -34,6 +34,10 @@ final class AnsiWhere implements Where {
 		return new AnsiOrderBy($this, $orders, $this->parameters()->binds());
 	}
 
+	public function returning(array $columns, array $parameters = []): Returning {
+		return new Returning($this, $columns, $this->parameters()->bind($parameters)->binds());
+	}
+
 	public function limit(int $limit): Limit {
 		return new AnsiLimit($this, $limit, $this->parameters()->binds());
 	}
