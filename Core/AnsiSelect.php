@@ -12,8 +12,8 @@ final class AnsiSelect implements Select {
 		$this->parameters = $parameters;
 	}
 
-	public function from(array $tables): From {
-		return new AnsiFrom($this, $tables, $this->parameters()->binds());
+	public function from(array $tables, array $parameters = []): From {
+		return new AnsiFrom($this, $tables, $this->parameters()->bind($parameters)->binds());
 	}
 
 	public function sql(): string {
