@@ -32,7 +32,7 @@ final class PgDoUpdate implements DoUpdate {
 				}
 
 				public function parameters(): Parameters {
-					return new Parameters();
+					return new UniqueParameters();
 				}
 			},
 			$this->values,
@@ -41,6 +41,6 @@ final class PgDoUpdate implements DoUpdate {
 	}
 
 	public function parameters(): Parameters {
-		return new Parameters($this->parameters);
+		return new UniqueParameters($this->parameters);
 	}
 }

@@ -51,6 +51,6 @@ final class CustomJoin implements Join {
 	}
 
 	public function parameters(): Parameters {
-		return new Parameters($this->parameters);
+		return new UniqueParameters($this->parameters);
 	}
 }

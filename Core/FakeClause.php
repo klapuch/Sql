@@ -9,6 +9,6 @@ final class FakeClause implements Clause {
 	}
 
 	public function parameters(): Parameters {
-		return new Parameters();
+		return new UniqueParameters();
 	}
 }

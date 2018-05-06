@@ -25,6 +25,6 @@ final class AnsiOffset implements Offset {
 	}
 
 	public function parameters(): Parameters {
-		return new Parameters($this->parameters);
+		return new UniqueParameters($this->parameters);
 	}
 }

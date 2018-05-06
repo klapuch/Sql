@@ -3,28 +3,19 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql;
 
-final class Parameters {
-	private $parameters;
+interface Parameters {
+	/**
+	 * Bind new parameters to the existing one
+	 *
+	 * @param mixed[] $parameters
+	 * @return self
+	 */
+	public function bind(array $parameters): self;
 
-	public function __construct(array ...$parameters) {
-		$this->parameters = $parameters;
-	}
-
-	public function bind(array $parameters): self {
-		return new self(...$this->parameters, ...[$parameters]);
-	}
-
-	public function binds(): array {
-		$duplications = $this->duplications(...$this->parameters);
-		if ($duplications) {
-			throw new \UnexpectedValueException(
-				sprintf('Keys can not be duplicated: %s', implode(', ', $duplications))
-			);
-		}
-		return array_merge(...$this->parameters);
-	}
-
-	private function duplications(array ...$parameters): array {
-		return array_filter(array_keys(array_intersect_key(...array_pad($parameters, 2, []))), 'is_string');
-	}
+	/**
+	 * All the binds
+	 *
+	 * @return mixed[]
+	 */
+	public function binds(): array;
 }

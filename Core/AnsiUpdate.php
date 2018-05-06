@@ -19,6 +19,6 @@ final class AnsiUpdate implements Update {
 	}
 
 	public function parameters(): Parameters {
-		return new Parameters();
+		return new UniqueParameters();
 	}
 }
