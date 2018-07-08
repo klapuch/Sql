@@ -30,7 +30,7 @@ final class ArrayOf implements Type {
 			...array_merge(
 				array_map(
 					function(Type $type): array {
-							return $type->parameters()->binds();
+						return $type->parameters()->binds();
 					},
 					$this->types
 				)
