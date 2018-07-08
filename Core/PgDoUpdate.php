@@ -4,12 +4,12 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class PgDoUpdate implements DoUpdate {
-	private $clause;
+	private $statement;
 	private $values;
 	private $parameters;
 
-	public function __construct(Clause $clause, array $values, array $parameters) {
-		$this->clause = $clause;
+	public function __construct(Statement $statement, array $values, array $parameters) {
+		$this->statement = $statement;
 		$this->values = $values;
 		$this->parameters = $parameters;
 	}
@@ -20,15 +20,15 @@ final class PgDoUpdate implements DoUpdate {
 
 	public function sql(): string {
 		return (new AnsiSet(
-			new class ($this->clause) implements Clause {
-				private $clause;
+			new class ($this->statement) implements Statement {
+				private $statement;
 
-				public function __construct(Clause $clause) {
-					$this->clause = $clause;
+				public function __construct(Statement $statement) {
+					$this->statement = $statement;
 				}
 
 				public function sql(): string {
-					return sprintf('%s DO UPDATE', $this->clause->sql());
+					return sprintf('%s DO UPDATE', $this->statement->sql());
 				}
 
 				public function parameters(): Parameters {

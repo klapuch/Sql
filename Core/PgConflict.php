@@ -4,12 +4,12 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class PgConflict implements Conflict {
-	private $clause;
+	private $statement;
 	private $target;
 	private $parameters;
 
-	public function __construct(Clause $clause, array $target, array $parameters) {
-		$this->clause = $clause;
+	public function __construct(Statement $statement, array $target, array $parameters) {
+		$this->statement = $statement;
 		$this->target = $target;
 		$this->parameters = $parameters;
 	}
@@ -25,7 +25,7 @@ final class PgConflict implements Conflict {
 	public function sql(): string {
 		return sprintf(
 			'%s ON CONFLICT%s',
-			$this->clause->sql(),
+			$this->statement->sql(),
 			$this->target
 				? sprintf(' (%s)', implode(', ', $this->target))
 				: ''

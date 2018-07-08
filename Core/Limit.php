@@ -3,6 +3,6 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql;
 
-interface Limit extends Clause {
+interface Limit extends Statement {
 	public function offset(int $offset): Offset;
 }

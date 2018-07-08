@@ -4,14 +4,14 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class CustomJoin implements Join {
-	private $clause;
+	private $statement;
 	private $type;
 	private $table;
 	private $condition;
 	private $parameters;
 
-	public function __construct(Clause $clause, string $type, string $table, string $condition, array $parameters) {
-		$this->clause = $clause;
+	public function __construct(Statement $statement, string $type, string $table, string $condition, array $parameters) {
+		$this->statement = $statement;
 		$this->type = $type;
 		$this->table = $table;
 		$this->condition = $condition;
@@ -47,7 +47,7 @@ final class CustomJoin implements Join {
 	}
 
 	public function sql(): string {
-		return sprintf('%s %s JOIN %s ON %s', $this->clause->sql(), $this->type, $this->table, $this->condition);
+		return sprintf('%s %s JOIN %s ON %s', $this->statement->sql(), $this->type, $this->table, $this->condition);
 	}
 
 	public function parameters(): Parameters {

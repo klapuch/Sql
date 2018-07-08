@@ -5,12 +5,12 @@ namespace Klapuch\Sql;
 
 final class AnsiWhere implements Where {
 	private $condition;
-	private $clause;
+	private $statement;
 	private $parameters;
 
-	public function __construct(Clause $clause, string $condition, array $parameters) {
+	public function __construct(Statement $statement, string $condition, array $parameters) {
 		$this->condition = $condition;
-		$this->clause = $clause;
+		$this->statement = $statement;
 		$this->parameters = $parameters;
 	}
 
@@ -47,7 +47,7 @@ final class AnsiWhere implements Where {
 	}
 
 	public function sql(): string {
-		return sprintf('%s WHERE %s', $this->clause->sql(), $this->condition);
+		return sprintf('%s WHERE %s', $this->statement->sql(), $this->condition);
 	}
 
 	public function parameters(): Parameters {

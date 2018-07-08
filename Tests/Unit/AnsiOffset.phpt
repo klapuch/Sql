@@ -14,10 +14,10 @@ use Tester\Assert;
 require __DIR__ . '/../bootstrap.php';
 
 final class AnsiOffset extends Tester\TestCase {
-	public function testIgnoringClauseForExplicitZero() {
+	public function testIgnoringStatementForExplicitZero() {
 		Assert::same(
 			'',
-			(new Sql\AnsiOffset(new Sql\FakeClause(), 0, []))->sql()
+			(new Sql\AnsiOffset(new Sql\FakeStatement(), 0, []))->sql()
 		);
 	}
 }

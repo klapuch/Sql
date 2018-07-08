@@ -14,10 +14,10 @@ use Tester\Assert;
 require __DIR__ . '/../bootstrap.php';
 
 final class AnsiOrderBy extends Tester\TestCase {
-	public function testIgnoringClauseForEmpty() {
+	public function testIgnoringStatementForEmpty() {
 		Assert::same(
 			'',
-			(new Sql\AnsiOrderBy(new Sql\FakeClause(), [], []))->sql()
+			(new Sql\AnsiOrderBy(new Sql\FakeStatement(), [], []))->sql()
 		);
 	}
 }

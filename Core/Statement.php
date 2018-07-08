@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql;
 
-interface Clause {
+interface Statement {
 	public function sql(): string;
 	public function parameters(): Parameters;
 }

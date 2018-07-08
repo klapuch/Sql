@@ -4,12 +4,12 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class AnsiLimit implements Limit {
-	private $clause;
+	private $statement;
 	private $limit;
 	private $parameters;
 
-	public function __construct(Clause $clause, int $limit, array $parameters) {
-		$this->clause = $clause;
+	public function __construct(Statement $statement, int $limit, array $parameters) {
+		$this->statement = $statement;
 		$this->limit = $limit;
 		$this->parameters = $parameters;
 	}
@@ -20,8 +20,8 @@ final class AnsiLimit implements Limit {
 
 	public function sql(): string {
 		if ($this->limit === PHP_INT_MAX)
-			return $this->clause->sql();
-		return sprintf('%s LIMIT %s', $this->clause->sql(), $this->limit);
+			return $this->statement->sql();
+		return sprintf('%s LIMIT %s', $this->statement->sql(), $this->limit);
 	}
 
 	public function parameters(): Parameters {

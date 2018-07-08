@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql;
 
-final class FakeClause implements Clause {
+final class FakeStatement implements Statement {
 	public function sql(): string {
 		return '';
 	}

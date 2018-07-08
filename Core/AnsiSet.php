@@ -4,12 +4,12 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class AnsiSet implements Set {
-	private $clause;
+	private $statement;
 	private $values;
 	private $parameters;
 
-	public function __construct(Clause $clause, array $values, array $parameters = []) {
-		$this->clause = $clause;
+	public function __construct(Statement $statement, array $values, array $parameters = []) {
+		$this->statement = $statement;
 		$this->values = $values;
 		$this->parameters = $parameters;
 	}
@@ -21,7 +21,7 @@ final class AnsiSet implements Set {
 	public function sql(): string {
 		return sprintf(
 			'%s SET %s',
-			$this->clause->sql(),
+			$this->statement->sql(),
 			implode(
 				', ',
 				array_map(

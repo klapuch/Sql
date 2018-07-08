@@ -14,10 +14,10 @@ use Tester\Assert;
 require __DIR__ . '/../bootstrap.php';
 
 final class AnsiLimit extends Tester\TestCase {
-	public function testIgnoringClauseForIntMax() {
+	public function testIgnoringStatementForIntMax() {
 		Assert::same(
 			'',
-			(new Sql\AnsiLimit(new Sql\FakeClause(), PHP_INT_MAX, []))->sql()
+			(new Sql\AnsiLimit(new Sql\FakeStatement(), PHP_INT_MAX, []))->sql()
 		);
 	}
 }

@@ -4,12 +4,12 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class AnsiFrom implements From {
-	private $clause;
+	private $statement;
 	private $tables;
 	private $parameters;
 
-	public function __construct(Clause $clause, array $tables, array $parameters) {
-		$this->clause = $clause;
+	public function __construct(Statement $statement, array $tables, array $parameters) {
+		$this->statement = $statement;
 		$this->tables = $tables;
 		$this->parameters = $parameters;
 	}
@@ -43,7 +43,7 @@ final class AnsiFrom implements From {
 	}
 
 	public function sql(): string {
-		return sprintf('%s FROM %s', $this->clause->sql(), implode(', ', $this->tables));
+		return sprintf('%s FROM %s', $this->statement->sql(), implode(', ', $this->tables));
 	}
 
 	public function parameters(): Parameters {

@@ -4,12 +4,12 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class AnsiGroupBy implements GroupBy {
-	private $clause;
+	private $statement;
 	private $columns;
 	private $parameters;
 
-	public function __construct(Clause $clause, array $columns, array $parameters) {
-		$this->clause = $clause;
+	public function __construct(Statement $statement, array $columns, array $parameters) {
+		$this->statement = $statement;
 		$this->columns = $columns;
 		$this->parameters = $parameters;
 	}
@@ -31,7 +31,7 @@ final class AnsiGroupBy implements GroupBy {
 	}
 
 	public function sql(): string {
-		return sprintf('%s GROUP BY %s', $this->clause->sql(), implode(', ', $this->columns));
+		return sprintf('%s GROUP BY %s', $this->statement->sql(), implode(', ', $this->columns));
 	}
 
 	public function parameters(): Parameters {

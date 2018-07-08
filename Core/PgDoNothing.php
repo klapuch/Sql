@@ -4,11 +4,11 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class PgDoNothing implements DoNothing {
-	private $clause;
+	private $statement;
 	private $parameters;
 
-	public function __construct(Clause $clause, array $parameters) {
-		$this->clause = $clause;
+	public function __construct(Statement $statement, array $parameters) {
+		$this->statement = $statement;
 		$this->parameters = $parameters;
 	}
 
@@ -17,7 +17,7 @@ final class PgDoNothing implements DoNothing {
 	}
 
 	public function sql(): string {
-		return sprintf('%s DO NOTHING', $this->clause->sql());
+		return sprintf('%s DO NOTHING', $this->statement->sql());
 	}
 
 	public function parameters(): Parameters {

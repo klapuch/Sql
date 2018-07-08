@@ -14,7 +14,7 @@ use Tester\Assert;
 require __DIR__ . '/../bootstrap.php';
 
 final class AnsiSelect extends Tester\TestCase {
-	public function testAllClauses() {
+	public function testAllStatements() {
 		$sql = (new Sql\AnsiSelect(['firstname', 'lastname', 'COUNT(*)']))
 			->from(['person', 'world'])
 			->join('LEFT', 'dungeon', 'dungeon.id = person.dungeon_id')

@@ -14,7 +14,7 @@ use Tester\Assert;
 require __DIR__ . '/../bootstrap.php';
 
 final class AnsiUpdate extends Tester\TestCase {
-	public function testAllClauses() {
+	public function testAllStatements() {
 		Assert::same(
 			'UPDATE world SET mood = ?, age = ? WHERE age > 50 AND age > 40 OR name LIKE ?',
 			(new Sql\AnsiUpdate('world'))

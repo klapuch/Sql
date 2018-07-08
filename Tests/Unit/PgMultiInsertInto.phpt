@@ -14,7 +14,7 @@ use Tester\Assert;
 require __DIR__ . '/../bootstrap.php';
 
 final class PgMultiInsertInto extends Tester\TestCase {
-	public function testAllClauses() {
+	public function testAllStatements() {
 		Assert::same(
 			'INSERT INTO world (name, age) VALUES (?, :age), (?, :age2)',
 			(new Sql\PgMultiInsertInto(

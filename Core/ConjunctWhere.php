@@ -5,13 +5,13 @@ namespace Klapuch\Sql;
 
 final class ConjunctWhere implements Where {
 	private $condition;
-	private $clause;
+	private $statement;
 	private $conjunct;
 	private $parameters;
 
-	public function __construct(Clause $clause, string $conjunct, string $condition, array $parameters) {
+	public function __construct(Statement $statement, string $conjunct, string $condition, array $parameters) {
 		$this->condition = $condition;
-		$this->clause = $clause;
+		$this->statement = $statement;
 		$this->conjunct = $conjunct;
 		$this->parameters = $parameters;
 	}
@@ -49,7 +49,7 @@ final class ConjunctWhere implements Where {
 	}
 
 	public function sql(): string {
-		return sprintf('%s %s %s', $this->clause->sql(), $this->conjunct, $this->condition);
+		return sprintf('%s %s %s', $this->statement->sql(), $this->conjunct, $this->condition);
 	}
 
 	public function parameters(): Parameters {

@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql;
 
-interface Selection extends Clause {
+interface Selection extends Statement {
 	public function where(string $condition, array $parameters = []): Where;
 	public function orderBy(array $orders): OrderBy;
 	public function limit(int $limit): Limit;

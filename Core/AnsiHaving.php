@@ -4,12 +4,12 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class AnsiHaving implements Having {
-	private $clause;
+	private $statement;
 	private $condition;
 	private $parameters;
 
-	public function __construct(Clause $clause, string $condition, array $parameters) {
-		$this->clause = $clause;
+	public function __construct(Statement $statement, string $condition, array $parameters) {
+		$this->statement = $statement;
 		$this->condition = $condition;
 		$this->parameters = $parameters;
 	}
@@ -27,7 +27,7 @@ final class AnsiHaving implements Having {
 	}
 
 	public function sql(): string {
-		return sprintf('%s HAVING %s', $this->clause->sql(), $this->condition);
+		return sprintf('%s HAVING %s', $this->statement->sql(), $this->condition);
 	}
 
 	public function parameters(): Parameters {

@@ -4,12 +4,12 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class AnsiOrderBy implements OrderBy {
-	private $clause;
+	private $statement;
 	private $orders;
 	private $parameters;
 
-	public function __construct(Clause $clause, array $orders, array $parameters) {
-		$this->clause = $clause;
+	public function __construct(Statement $statement, array $orders, array $parameters) {
+		$this->statement = $statement;
 		$this->orders = $orders;
 		$this->parameters = $parameters;
 	}
@@ -24,10 +24,10 @@ final class AnsiOrderBy implements OrderBy {
 
 	public function sql(): string {
 		if (empty($this->orders))
-			return $this->clause->sql();
+			return $this->statement->sql();
 		return sprintf(
 			'%s ORDER BY %s',
-			$this->clause->sql(),
+			$this->statement->sql(),
 			implode(
 				', ',
 				array_map(
