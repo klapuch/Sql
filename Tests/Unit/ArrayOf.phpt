@@ -14,18 +14,13 @@ use Tester\Assert;
 require __DIR__ . '/../bootstrap.php';
 
 final class ArrayOf extends Tester\TestCase {
-	public function testConstructedArray() {
-		$array = new Sql\ArrayOf(new Sql\Row([1, 'a']), new Sql\Row([2, 'b']));
-		Assert::same('ARRAY[ROW(?, ?), ROW(?, ?)]', $array->sql());
-		Assert::same([1, 'a', 2, 'b'], $array->parameters()->binds());
-	}
-
-	/**
-	 * @throws \UnexpectedValueException Keys can not be duplicated: number
-	 */
-	public function testThrowingOnRepeatedParameter() {
-		$array = new Sql\ArrayOf(new Sql\Row(['number' => 1, 'letter' => 'a']), new Sql\Row(['number' => 2, 'letter2' => 'b']));
-		Assert::same([1, 'a', 2, 'b'], $array->parameters()->binds());
+	public function testConstructedTypedArray() {
+		$array = new Sql\ArrayOf(
+			'foo[]',
+			new Sql\Row(new Sql\Parameter('?'), new Sql\Parameter('?')),
+			new Sql\Row(new Sql\Parameter('?'), new Sql\Parameter('?'))
+		);
+		Assert::same('ARRAY[ROW(?, ?), ROW(?, ?)]::foo[]', $array->expression());
 	}
 }
 

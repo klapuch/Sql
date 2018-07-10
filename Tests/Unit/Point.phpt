@@ -13,11 +13,11 @@ use Tester\Assert;
 
 require __DIR__ . '/../bootstrap.php';
 
-final class Row extends Tester\TestCase {
+final class Point extends Tester\TestCase {
 	public function testConstructingValuesInRow() {
-		$row = new Sql\Row(new Sql\Parameter(':x'), new Sql\Parameter(':y'));
-		Assert::same('ROW(:x, :y)', $row->expression());
+		$row = new Sql\Point(new Sql\Parameter(':x'), new Sql\Parameter(':y'));
+		Assert::same('POINT(:x, :y)', $row->expression());
 	}
 }
 
-(new Row())->run();
+(new Point())->run();

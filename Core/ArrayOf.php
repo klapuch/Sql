@@ -4,37 +4,27 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class ArrayOf implements Type {
+	private $type;
 	private $types;
 
-	public function __construct(Type ...$types) {
+	public function __construct(string $type, Type ...$types) {
+		$this->type = $type;
 		$this->types = $types;
 	}
 
-	public function sql(): string {
+	public function expression(): string {
 		return sprintf(
-			'ARRAY[%s]',
+			'ARRAY[%s]::%s',
 			implode(
 				', ',
 				array_map(
 					function(Type $type): string {
-						return $type->sql();
+						return $type->expression();
 					},
 					$this->types
 				)
-			)
-		);
-	}
-
-	public function parameters(): Parameters {
-		return new UniqueParameters(
-			...array_merge(
-				array_map(
-					function(Type $type): array {
-						return $type->parameters()->binds();
-					},
-					$this->types
-				)
-			)
+			),
+			$this->type
 		);
 	}
 }
