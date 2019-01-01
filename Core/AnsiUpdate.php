@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class AnsiUpdate implements Update {
+	/** @var string */
 	private $table;
 
 	public function __construct(string $table) {

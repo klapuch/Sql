@@ -5,7 +5,10 @@ namespace Klapuch\Sql;
 
 interface GroupBy extends Statement {
 	public function having(string $condition, array $parameters = []): Having;
+
 	public function orderBy(array $orders): OrderBy;
+
 	public function limit(int $limit): Limit;
+
 	public function offset(int $offset): Offset;
 }

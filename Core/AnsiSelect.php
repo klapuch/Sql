@@ -4,7 +4,10 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class AnsiSelect implements Select {
+	/** @var mixed[] */
 	private $columns;
+
+	/** @var mixed[] */
 	private $parameters;
 
 	public function __construct(array $columns, array $parameters = []) {

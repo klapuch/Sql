@@ -4,8 +4,13 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class AnsiHaving implements Having {
+	/** @var \Klapuch\Sql\Statement */
 	private $statement;
+
+	/** @var string */
 	private $condition;
+
+	/** @var mixed[] */
 	private $parameters;
 
 	public function __construct(Statement $statement, string $condition, array $parameters) {

@@ -6,7 +6,6 @@ namespace Klapuch\Sql;
 interface Parameters {
 	/**
 	 * Bind new parameters to the existing one
-	 *
 	 * @param mixed[] $parameters
 	 * @return self
 	 */
@@ -14,7 +13,6 @@ interface Parameters {
 
 	/**
 	 * All the binds
-	 *
 	 * @return mixed[]
 	 */
 	public function binds(): array;

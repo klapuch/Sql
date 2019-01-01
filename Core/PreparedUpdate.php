@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class PreparedUpdate implements Update {
+	/** @var \Klapuch\Sql\Update */
 	private $origin;
 
 	public function __construct(Update $origin) {
@@ -13,10 +14,10 @@ final class PreparedUpdate implements Update {
 	public function set(array $values, array $parameters = []): Set {
 		return new AnsiSet(
 			$this,
-			array_combine(
+			(array) array_combine(
 				array_keys($values),
 				array_map(
-					function (string $column): string {
+					static function (string $column): string {
 						return sprintf(':%s', $column);
 					},
 					array_keys($values)

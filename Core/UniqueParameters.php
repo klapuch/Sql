@@ -7,6 +7,7 @@ namespace Klapuch\Sql;
  * Parameter without duplication
  */
 final class UniqueParameters implements Parameters {
+	/** @var mixed[] */
 	private $parameters;
 
 	public function __construct(array ...$parameters) {

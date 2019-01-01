@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class Parameter implements Type {
+	/** @var string */
 	private $value;
 
 	public function __construct(string $value) {

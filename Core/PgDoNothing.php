@@ -4,7 +4,10 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class PgDoNothing implements DoNothing {
+	/** @var \Klapuch\Sql\Statement */
 	private $statement;
+
+	/** @var mixed[] */
 	private $parameters;
 
 	public function __construct(Statement $statement, array $parameters) {

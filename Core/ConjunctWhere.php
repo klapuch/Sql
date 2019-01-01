@@ -4,9 +4,16 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class ConjunctWhere implements Where {
+	/** @var string */
 	private $condition;
+
+	/** @var \Klapuch\Sql\Statement */
 	private $statement;
+
+	/** @var string */
 	private $conjunct;
+
+	/** @var mixed[] */
 	private $parameters;
 
 	public function __construct(Statement $statement, string $conjunct, string $condition, array $parameters) {

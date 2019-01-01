@@ -8,6 +8,7 @@ namespace Klapuch\Sql;
  * [book => [author => myself]] made book_author with value myself
  */
 final class FlatParameters implements Parameters {
+	/** @var \Klapuch\Sql\Parameters */
 	private $origin;
 
 	public function __construct(Parameters $origin) {

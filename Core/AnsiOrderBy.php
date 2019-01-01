@@ -4,8 +4,13 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class AnsiOrderBy implements OrderBy {
+	/** @var \Klapuch\Sql\Statement */
 	private $statement;
+
+	/** @var mixed[] */
 	private $orders;
+
+	/** @var mixed[] */
 	private $parameters;
 
 	public function __construct(Statement $statement, array $orders, array $parameters) {
@@ -23,7 +28,7 @@ final class AnsiOrderBy implements OrderBy {
 	}
 
 	public function sql(): string {
-		if (empty($this->orders))
+		if ($this->orders === [])
 			return $this->statement->sql();
 		return sprintf(
 			'%s ORDER BY %s',
@@ -31,7 +36,7 @@ final class AnsiOrderBy implements OrderBy {
 			implode(
 				', ',
 				array_map(
-					function(string $column, string $order): string {
+					static function(string $column, string $order): string {
 						return sprintf('%s %s', $column, $order);
 					},
 					array_keys($this->orders),

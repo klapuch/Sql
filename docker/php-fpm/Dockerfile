@@ -1,17 +1,11 @@
-FROM php:fpm-alpine
+FROM php:7.3-fpm-alpine
 
-RUN apk update  && apk add --no-cache git zip unzip zlib-dev g++ make autoconf \
-	&& docker-php-ext-install zip
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
-RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
-
-RUN curl -sSL https://github.com/xdebug/xdebug/archive/4ada850.zip -o /tmp/xdebug.zip \
-	&& unzip /tmp/xdebug.zip -d /tmp \
-	&& cd /tmp/xdebug-* \
-	&& phpize \
-	&& ./configure \
-	&& make \
-	&& make install \
-	&& rm -rf /tmp/xdebug*
-
-RUN rm -rf /var/cache/apk/*
+RUN apk update \
+    && apk add --no-cache git zip unzip make autoconf g++ zlib-dev libzip-dev bash \
+    && docker-php-ext-install zip \
+    && pecl install apcu igbinary redis xdebug-beta \
+    && curl -sS https://getcomposer.org/installer | php \
+        && mv composer.phar /usr/local/bin/composer \
+    && rm -rf /var/cache/apk/*

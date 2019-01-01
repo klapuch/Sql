@@ -4,8 +4,13 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class PgInsertInto implements InsertInto {
+	/** @var string */
 	private $table;
+
+	/** @var mixed[] */
 	private $values;
+
+	/** @var mixed[] */
 	private $parameters;
 
 	public function __construct(string $table, array $values, array $parameters = []) {

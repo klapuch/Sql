@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class Row implements Type {
+	/** @var \Klapuch\Sql\Type[] */
 	private $types;
 
 	public function __construct(Type ...$types) {
@@ -16,7 +17,7 @@ final class Row implements Type {
 			implode(
 				', ',
 				array_map(
-					function(Type $type): string {
+					static function(Type $type): string {
 						return $type->expression();
 					},
 					$this->types

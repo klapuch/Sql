@@ -19,7 +19,7 @@ install:
   - docker-compose -p sql up -d --build
 
 before_script:
-  - docker exec sql_php-fpm_1 composer install --no-interaction --prefer-dist --no-scripts --no-progress --no-suggest --optimize-autoloader --classmap-authoritative
+  - docker exec sql_php-fpm_1 composer install --no-interaction --prefer-dist --no-scripts --no-progress --no-suggest --classmap-authoritative
 
 script:
   - docker exec sql_php-fpm_1 vendor/bin/phing ci

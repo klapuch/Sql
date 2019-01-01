@@ -4,7 +4,10 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class Point implements Type {
+	/** @var \Klapuch\Sql\Type */
 	private $x;
+
+	/** @var \Klapuch\Sql\Type */
 	private $y;
 
 	public function __construct(Type $x, Type $y) {

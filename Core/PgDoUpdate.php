@@ -4,8 +4,13 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class PgDoUpdate implements DoUpdate {
+	/** @var \Klapuch\Sql\Statement */
 	private $statement;
+
+	/** @var mixed[] */
 	private $values;
+
+	/** @var mixed[] */
 	private $parameters;
 
 	public function __construct(Statement $statement, array $values, array $parameters) {
@@ -21,6 +26,7 @@ final class PgDoUpdate implements DoUpdate {
 	public function sql(): string {
 		return (new AnsiSet(
 			new class ($this->statement) implements Statement {
+				/** @var \Klapuch\Sql\Statement */
 				private $statement;
 
 				public function __construct(Statement $statement) {

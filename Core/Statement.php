@@ -5,5 +5,6 @@ namespace Klapuch\Sql;
 
 interface Statement {
 	public function sql(): string;
+
 	public function parameters(): Parameters;
 }

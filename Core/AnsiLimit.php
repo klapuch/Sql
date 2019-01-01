@@ -4,8 +4,13 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class AnsiLimit implements Limit {
+	/** @var \Klapuch\Sql\Statement */
 	private $statement;
+
+	/** @var int */
 	private $limit;
+
+	/** @var mixed[] */
 	private $parameters;
 
 	public function __construct(Statement $statement, int $limit, array $parameters) {

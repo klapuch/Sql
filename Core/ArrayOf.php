@@ -4,7 +4,10 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class ArrayOf implements Type {
+	/** @var string */
 	private $type;
+
+	/** @var \Klapuch\Sql\Type[] */
 	private $types;
 
 	public function __construct(string $type, Type ...$types) {
@@ -18,7 +21,7 @@ final class ArrayOf implements Type {
 			implode(
 				', ',
 				array_map(
-					function(Type $type): string {
+					static function(Type $type): string {
 						return $type->expression();
 					},
 					$this->types

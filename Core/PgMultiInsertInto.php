@@ -4,8 +4,13 @@ declare(strict_types = 1);
 namespace Klapuch\Sql;
 
 final class PgMultiInsertInto implements InsertInto {
+	/** @var string */
 	private $table;
+
+	/** @var mixed[] */
 	private $values;
+
+	/** @var mixed[] */
 	private $parameters;
 
 	public function __construct(string $table, array $values, array $parameters = []) {
@@ -30,7 +35,7 @@ final class PgMultiInsertInto implements InsertInto {
 			implode(
 				', ',
 				array_map(
-					function(array $row): string {
+					static function(array $row): string {
 						return sprintf('(%s)', implode(', ', $row));
 					},
 					array_map(null, ...array_values($this->values))

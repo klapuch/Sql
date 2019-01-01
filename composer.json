@@ -22,10 +22,11 @@
   "require-dev": {
     "nette/tester": "^2.0",
     "jakub-onderka/php-parallel-lint": "^1.0.0",
-    "slevomat/coding-standard": "~4.5.0",
-    "consistence/coding-standard": "^2.2",
+    "slevomat/coding-standard": "^4.8.3",
     "phing/phing": "^2.16",
-    "phpstan/phpstan": "^0.9.0"
+    "consistence/coding-standard": "^3.0",
+    "phpstan/phpstan": "^0.10.1",
+    "phpstan/phpstan-strict-rules": "*"
   },
   "autoload": {
     "psr-4": {
