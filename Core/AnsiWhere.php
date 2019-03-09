@@ -19,6 +19,11 @@ final class AnsiWhere implements Where {
 		$this->parameters = $parameters;
 	}
 
+	public function whereIn(string $column, array $parameters = []): Where {
+		$in = new In($column, $parameters);
+		return new ConjunctWhere($this, 'AND', $in->sql(), $this->parameters()->bind($in->parameters()->binds())->binds());
+	}
+
 	public function where(string $condition, array $parameters = []): Where {
 		return new ConjunctWhere($this, 'AND', $condition, $this->parameters()->bind($parameters)->binds());
 	}

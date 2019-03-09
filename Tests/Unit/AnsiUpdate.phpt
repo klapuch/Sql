@@ -26,6 +26,18 @@ final class AnsiUpdate extends Tester\TestCase {
 		);
 	}
 
+	public function testWhereIn() {
+		Assert::same(
+			'UPDATE world SET mood = ?, age = ? WHERE 1=1 AND age IN (?, ?) AND age > 40 OR name LIKE ?',
+			(new Sql\AnsiUpdate('world'))
+				->set(['mood' => '?', 'age' => '?'])
+				->whereIn('age', [18, 20])
+				->where('age > 40')
+				->orWhere('name LIKE ?')
+				->sql()
+		);
+	}
+
 	public function testAllParameters() {
 		Assert::same(
 			['good', 25, 50, 40, 'foo'],

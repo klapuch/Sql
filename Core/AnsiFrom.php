@@ -23,6 +23,10 @@ final class AnsiFrom implements From {
 		return new AnsiWhere($this, $comparison, $this->parameters()->bind($parameters)->binds());
 	}
 
+	public function whereIn(string $column, array $parameters = []): Where {
+		return $this->where('1=1')->whereIn($column, $parameters);
+	}
+
 	public function join(string $type, string $table, string $condition, array $parameters = []): Join {
 		return new CustomJoin($this, $type, $table, $condition, $this->parameters()->bind($parameters)->binds());
 	}

@@ -8,6 +8,8 @@ interface Join extends Selection {
 
 	public function where(string $comparison, array $parameters = []): Where;
 
+	public function whereIn(string $column, array $parameters = []): Where;
+
 	public function groupBy(array $columns): GroupBy;
 
 	public function having(string $condition): Having;

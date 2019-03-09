@@ -20,6 +20,8 @@ final class AnsiSelect extends Tester\TestCase {
 			->join('LEFT', 'dungeon', 'dungeon.id = person.dungeon_id')
 			->join('INNER', 'farts', 'farts.id = dungeon.dungeon_id')
 			->where('age > 20')
+			->whereIn('list', ['a', 'b', 'c'])
+			->whereIn('list2', ['a', 'b'])
 			->where('age > 40')
 			->orWhere('age > 50')
 			->groupBy(['firstname', 'lastname'])
@@ -28,17 +30,39 @@ final class AnsiSelect extends Tester\TestCase {
 			->limit(10)
 			->offset(100)
 			->sql();
-		Assert::same('SELECT firstname, lastname, COUNT(*) FROM person, world LEFT JOIN dungeon ON dungeon.id = person.dungeon_id INNER JOIN farts ON farts.id = dungeon.dungeon_id WHERE age > 20 AND age > 40 OR age > 50 GROUP BY firstname, lastname HAVING COUNT(firstname) > 10 ORDER BY firstname DESC, lastname ASC LIMIT 10 OFFSET 100', $sql);
+		Assert::same('SELECT firstname, lastname, COUNT(*) FROM person, world LEFT JOIN dungeon ON dungeon.id = person.dungeon_id INNER JOIN farts ON farts.id = dungeon.dungeon_id WHERE age > 20 AND list IN (?, ?, ?) AND list2 IN (?, ?) AND age > 40 OR age > 50 GROUP BY firstname, lastname HAVING COUNT(firstname) > 10 ORDER BY firstname DESC, lastname ASC LIMIT 10 OFFSET 100', $sql);
+	}
+
+	public function testWhereIn() {
+		$sql = (new Sql\AnsiSelect(['firstname', 'lastname', 'COUNT(*)']))
+			->from(['person', 'world'])
+			->join('LEFT', 'dungeon', 'dungeon.id = person.dungeon_id')
+			->join('INNER', 'farts', 'farts.id = dungeon.dungeon_id')
+			->whereIn('list0', ['a'])
+			->whereIn('list1', ['a', 'b', 'c'])
+			->sql();
+		Assert::same('SELECT firstname, lastname, COUNT(*) FROM person, world LEFT JOIN dungeon ON dungeon.id = person.dungeon_id INNER JOIN farts ON farts.id = dungeon.dungeon_id WHERE 1=1 AND list0 IN (?) AND list1 IN (?, ?, ?)', $sql);
+	}
+
+
+	public function testFromWhereIn() {
+		$sql = (new Sql\AnsiSelect(['firstname', 'lastname', 'COUNT(*)']))
+			->from(['person', 'world'])
+			->whereIn('list0', ['a'])
+			->whereIn('list1', ['a', 'b', 'c'])
+			->sql();
+		Assert::same('SELECT firstname, lastname, COUNT(*) FROM person, world WHERE 1=1 AND list0 IN (?) AND list1 IN (?, ?, ?)', $sql);
 	}
 
 	public function testAllParameters() {
 		Assert::same(
-			[10, 'ajdi', 'foo' => 'bar', 20, 40, 50, 5],
+			[10, 'ajdi', 'foo' => 'bar', 20, 'a', 'b', 'c', 40, 50, 5],
 			(new Sql\AnsiSelect(['firstname', 'lastname', 'COUNT(*)', '?'], [10]))
 				->from(['person', 'world'])
 				->join('LEFT', 'dungeon', 'dungeon.id = ?', ['ajdi'])
 				->join('INNER', 'farts', 'farts.id = :foo', ['foo' => 'bar'])
 				->where('age > ?', [20])
+				->whereIn('list', ['a', 'b', 'c'])
 				->where('age > ?', [40])
 				->orWhere('age > ?', [50])
 				->groupBy(['firstname', 'lastname'])

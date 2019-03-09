@@ -8,6 +8,8 @@ interface Where extends Selection {
 
 	public function orWhere(string $condition, array $parameters = []): self;
 
+	public function whereIn(string $column, array $parameters = []): self;
+
 	public function groupBy(array $columns): GroupBy;
 
 	public function having(string $condition, array $parameters = []): Having;

@@ -19,6 +19,10 @@ final class AnsiSet implements Set {
 		$this->parameters = $parameters;
 	}
 
+	public function whereIn(string $column, array $parameters = []): Where {
+		return $this->where('1=1')->whereIn($column, $parameters);
+	}
+
 	public function where(string $comparison, array $parameters = []): Where {
 		return new AnsiWhere($this, $comparison, $this->parameters()->bind($parameters)->binds());
 	}

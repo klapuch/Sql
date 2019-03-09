@@ -6,6 +6,8 @@ namespace Klapuch\Sql;
 interface From extends Selection {
 	public function where(string $comparison, array $parameters = []): Where;
 
+	public function whereIn(string $column, array $parameters = []): Where;
+
 	public function join(string $type, string $table, string $condition, array $parameters = []): Join;
 
 	public function groupBy(array $columns): GroupBy;

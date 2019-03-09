@@ -5,4 +5,6 @@ namespace Klapuch\Sql;
 
 interface Set extends Statement {
 	public function where(string $comparison, array $parameters = []): Where;
+
+	public function whereIn(string $column, array $parameters = []): Where;
 }
