@@ -36,7 +36,11 @@ final class AnsiOrderBy implements OrderBy {
 			implode(
 				', ',
 				array_map(
-					static function(string $column, string $order): string {
+					static function($column, string $order): string {
+						if (is_int($column)) {
+							$column = $order;
+							$order = 'ASC';
+						}
 						return sprintf('%s %s', $column, $order);
 					},
 					array_keys($this->orders),
