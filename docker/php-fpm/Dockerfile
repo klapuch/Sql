@@ -5,7 +5,7 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN apk update \
     && apk add --no-cache git zip unzip make autoconf g++ zlib-dev libzip-dev bash \
     && docker-php-ext-install zip \
-    && pecl install apcu igbinary redis xdebug-beta \
+    && pecl install xdebug-beta \
     && curl -sS https://getcomposer.org/installer | php \
         && mv composer.phar /usr/local/bin/composer \
     && rm -rf /var/cache/apk/*

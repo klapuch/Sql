@@ -19,10 +19,13 @@ install:
   - docker-compose -p sql up -d --build
 
 before_script:
-  - docker exec sql_php-fpm_1 composer install --no-interaction --prefer-dist --no-scripts --no-progress --no-suggest --classmap-authoritative
+  - docker exec sql_php-fpm_1 make composer-install
 
 script:
-  - docker exec sql_php-fpm_1 vendor/bin/phing ci
+  - docker exec sql_php-fpm_1 make ci
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+
+after_failure:
+  - docker exec sql_php-fpm_1 make echo-failed-tests
