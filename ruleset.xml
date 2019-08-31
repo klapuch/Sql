@@ -115,4 +115,12 @@
 		<exclude-pattern>Tests/Unit</exclude-pattern>
 	</rule>
 
+	<rule ref="SlevomatCodingStandard.Variables.UnusedVariable.UnusedVariable">
+		<exclude-pattern>Core/PreparedStatement.php</exclude-pattern>
+	</rule>
+
+	<rule ref="SlevomatCodingStandard.Operators.RequireOnlyStandaloneIncrementAndDecrementOperators.PreIncrementOperatorNotUsedStandalone">
+		<exclude-pattern>Core/PreparedStatement.php</exclude-pattern>
+	</rule>
+
 </ruleset>
