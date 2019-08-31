@@ -41,8 +41,8 @@ final class MultiInsertInto implements Clause {
 	private static function names(array $columns, int $parameters): array {
 		$names = [];
 		foreach ($columns as $column)
-			for ($i = 1; $i <= $parameters; ++$i)
-				$names[] = sprintf(':%s__%d', $column, $i);
+			for ($position = 1; $position <= $parameters; ++$position)
+				$names[] = sprintf(':%s__%d', $column, $position);
 		return $names;
 	}
 
