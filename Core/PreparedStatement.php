@@ -16,7 +16,7 @@ final class PreparedStatement {
 	public function sql(): array {
 		return array_reduce(
 			array_keys($this->parameters),
-			function (array $parameters, string $column): array {
+			function (array $parameters, $column): array {
 				$parameter = $this->parameters[$column];
 				if ($parameter instanceof Expression) {
 					return $parameters += [$column => self::sqlNames($column, $parameter->sql())];
@@ -33,7 +33,7 @@ final class PreparedStatement {
 	public function parameters(): array {
 		return array_reduce(
 			array_keys($this->parameters),
-			function (array $parameters, string $column): array {
+			function (array $parameters, $column): array {
 				$value = $this->parameters[$column];
 				if ($value instanceof Expression) {
 					return $parameters += self::parameterNames($column, $value->parameters());
@@ -45,7 +45,7 @@ final class PreparedStatement {
 	}
 
 	private static function sqlNames(string $column, string $sql): string {
-		return preg_replace_callback('~\?~', static function () use ($column): string {
+		return (string) preg_replace_callback('~\?~', static function () use ($column): string {
 			static $position = 0;
 			return sprintf(':%s__%d', $column, ++$position);
 		}, $sql);

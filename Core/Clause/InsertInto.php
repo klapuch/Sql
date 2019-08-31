@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql\Clause;
 
-use Klapuch\Sql\Expression\Expression;
 use Klapuch\Sql;
 
 final class InsertInto implements Clause {
@@ -13,7 +12,7 @@ final class InsertInto implements Clause {
 	/** @var mixed[] */
 	private $values;
 
-	/** @var Sql\PreparedStatement */
+	/** @var \Klapuch\Sql\PreparedStatement */
 	private $preparedStatement;
 
 	public function __construct(string $table, array $values) {

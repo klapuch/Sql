@@ -3,8 +3,6 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql\Expression;
 
-use Klapuch\Sql\Statement\Statement;
-
 final class PgArray implements Expression {
 	/** @var mixed[] */
 	private $values;

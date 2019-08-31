@@ -6,14 +6,10 @@ namespace Klapuch\Sql\Expression;
 use Klapuch\Sql;
 
 final class Set implements Expression {
-	/** @var mixed[] */
-	private $assigning;
-
-	/** @var Sql\PreparedStatement */
+	/** @var \Klapuch\Sql\PreparedStatement */
 	private $preparedStatement;
 
 	public function __construct(array $assigning) {
-		$this->assigning = $assigning;
 		$this->preparedStatement = new Sql\PreparedStatement($assigning);
 	}
 
