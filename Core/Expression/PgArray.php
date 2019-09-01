@@ -7,12 +7,16 @@ final class PgArray implements Expression {
 	/** @var mixed[] */
 	private $values;
 
-	public function __construct(array $values) {
+	/** @var string */
+	private $type;
+
+	public function __construct(array $values, string $type) {
 		$this->values = $values;
+		$this->type = $type;
 	}
 
 	public function sql(): string {
-		return sprintf('ARRAY[%s]', implode(', ', array_fill(0, count($this->values), '?')));
+		return sprintf('ARRAY[%s]::%s[]', implode(', ', array_fill(0, count($this->values), '?')), $this->type);
 	}
 
 	public function parameters(): array {

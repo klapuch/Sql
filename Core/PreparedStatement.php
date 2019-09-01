@@ -5,6 +5,9 @@ namespace Klapuch\Sql;
 
 use Klapuch\Sql\Expression\Expression;
 
+/**
+ * @internal
+ */
 final class PreparedStatement {
 	/** @var mixed[] */
 	private $parameters;
