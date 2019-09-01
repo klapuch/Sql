@@ -3,24 +3,27 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql\Expression;
 
+use Klapuch\Sql;
+
 final class Set implements Expression {
-	/** @var mixed[] */
-	private $assigning;
+	/** @var \Klapuch\Sql\PreparedStatement */
+	private $preparedStatement;
 
 	public function __construct(array $assigning) {
-		$this->assigning = $assigning;
+		$this->preparedStatement = new Sql\PreparedStatement($assigning);
 	}
 
 	public function sql(): string {
+		$sql = $this->preparedStatement->sql();
 		return implode(
 			', ',
-			array_map(static function (string $column): string {
-				return sprintf('%1$s = :%1$s', $column);
-			}, array_keys($this->assigning)),
+			array_map(static function (string $column, string $value): string {
+				return implode(' = ', [$column, $value]);
+			}, array_keys($sql), $sql),
 		);
 	}
 
 	public function parameters(): array {
-		return $this->assigning;
+		return $this->preparedStatement->parameters();
 	}
 }
