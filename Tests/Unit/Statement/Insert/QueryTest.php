@@ -37,6 +37,15 @@ final class QueryTest extends Tester\TestCase {
 				->doNothing()
 				->sql(),
 		);
+		Assert::same(
+			'INSERT INTO world (firstname, lastname) VALUES (:firstname, :lastname) ON CONFLICT (firstname, lastname) DO NOTHING RETURNING *',
+			(new Statement\Insert\Query())
+				->insertInto(new Clause\InsertInto('world', ['firstname' => 'abc', 'lastname' => 'def']))
+				->returning(new Clause\Returning(['*']))
+				->onConflict(new Clause\OnConflict(['firstname', 'lastname']))
+				->doNothing()
+				->sql(),
+		);
 	}
 }
 (new QueryTest())->run();
