@@ -6,24 +6,31 @@ namespace Klapuch\Sql\Expression;
 use Klapuch\Sql;
 
 final class Set implements Expression {
-	/** @var \Klapuch\Sql\PreparedStatement */
-	private $preparedStatement;
+	/** @var mixed[] */
+	private $assigning;
 
 	public function __construct(array $assigning) {
-		$this->preparedStatement = new Sql\PreparedStatement($assigning);
+		$this->assigning = $assigning;
 	}
 
 	public function sql(): string {
-		$sql = $this->preparedStatement->sql();
 		return implode(
 			', ',
-			array_map(static function (string $column, string $value): string {
-				return implode(' = ', [$column, $value]);
-			}, array_keys($sql), $sql),
+			array_map(static function (string $column, $value): string {
+				return $value instanceof Sql\Expression\Expression
+					? sprintf('%s = %s', $column, $value->sql())
+					: sprintf('%s = :%s', $column, $column);
+			}, array_keys($this->assigning), $this->assigning),
 		);
 	}
 
 	public function parameters(): array {
-		return $this->preparedStatement->parameters();
+		$values = [];
+		foreach ($this->assigning as $column => $value) {
+			$values += $value instanceof Sql\Expression\Expression
+				? $value->parameters()
+				: [$column => $value];
+		}
+		return $values;
 	}
 }

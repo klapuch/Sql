@@ -12,11 +12,7 @@ final class InsertInto implements Clause {
 	/** @var mixed[] */
 	private $values;
 
-	/** @var \Klapuch\Sql\PreparedStatement */
-	private $preparedStatement;
-
 	public function __construct(string $table, array $values) {
-		$this->preparedStatement = new Sql\PreparedStatement($values);
 		$this->table = $table;
 		$this->values = $values;
 	}
@@ -26,11 +22,21 @@ final class InsertInto implements Clause {
 			'INSERT INTO %s (%s) VALUES (%s)',
 			$this->table,
 			implode(', ', array_keys($this->values)),
-			implode(', ', $this->preparedStatement->sql()),
+			implode(', ', array_map(static function (string $column, $value): string {
+				return $value instanceof Sql\Expression\Expression
+					? $value->sql()
+					: sprintf(':%s', $column);
+			}, array_keys($this->values), $this->values)),
 		);
 	}
 
 	public function parameters(): array {
-		return $this->preparedStatement->parameters();
+		$values = [];
+		foreach ($this->values as $column => $value) {
+			$values += $value instanceof Sql\Expression\Expression
+				? $value->parameters()
+				: [$column => $value];
+		}
+		return $values;
 	}
 }

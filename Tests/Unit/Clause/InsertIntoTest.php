@@ -22,8 +22,12 @@ final class InsertIntoTest extends Tester\TestCase {
 
 	public function testArray(): void {
 		$clause = new Clause\InsertInto('world', ['firstname' => new Expression\PgArray(['a', 'b'], 'text'), 'lastname' => 'c']);
-		Assert::same('INSERT INTO world (firstname, lastname) VALUES (ARRAY[:firstname__1, :firstname__2]::text[], :lastname)', $clause->sql());
-		Assert::same(['firstname__1' => 'a', 'firstname__2' => 'b', 'lastname' => 'c'], $clause->parameters());
+		Assert::match('INSERT INTO world (firstname, lastname) VALUES (ARRAY[:pg_array__text__%d%__1, :pg_array__text__%d%__2]::text[], :lastname)', $clause->sql());
+		[$key1, $key2, $key3] = array_keys($clause->parameters());
+		Assert::same(['a', 'b', 'c'], array_values($clause->parameters()));
+		Assert::match('pg_array__text__%d%__1', $key1);
+		Assert::match('pg_array__text__%d%__2', $key2);
+		Assert::match('lastname', $key3);
 	}
 }
 (new InsertIntoTest())->run();
