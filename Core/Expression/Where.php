@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql\Expression;
 
+use Klapuch\Sql\PreparedColumn;
+
 final class Where implements Expression {
 	/** @var string */
 	private $column;
@@ -20,10 +22,10 @@ final class Where implements Expression {
 	}
 
 	public function sql(): string {
-		return sprintf('%1$s = :%1$s', $this->column);
+		return sprintf('%s = :%s', $this->column, new PreparedColumn($this->column));
 	}
 
 	public function parameters(): array {
-		return [$this->column => $this->value];
+		return [(string) new PreparedColumn($this->column) => $this->value];
 	}
 }

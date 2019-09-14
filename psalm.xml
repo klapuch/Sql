@@ -16,5 +16,6 @@
         <LessSpecificReturnType errorLevel="info" />
         <PossiblyNullArrayOffset errorLevel="info" />
         <MissingClosureParamType errorLevel="info" />
+        <ImplicitToStringCast errorLevel="info" />
     </issueHandlers>
 </psalm>

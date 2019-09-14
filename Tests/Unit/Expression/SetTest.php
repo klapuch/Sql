@@ -31,6 +31,12 @@ final class SetTest extends Tester\TestCase {
 		Assert::match('lastname', $key3);
 	}
 
+	public function testTableColumn(): void {
+		$expression = new Expression\Set(['users.firstname' => 'a', 'users.lastname' => 'b']);
+		Assert::same(['_users__firstname' => 'a', '_users__lastname' => 'b'], $expression->parameters());
+		Assert::same('users.firstname = :_users__firstname, users.lastname = :_users__lastname', $expression->sql());
+	}
+
 	public function testPassingOnEmpty(): void {
 		Assert::same('', (new Expression\Set([]))->sql());
 		Assert::same([], (new Expression\Set([]))->parameters());

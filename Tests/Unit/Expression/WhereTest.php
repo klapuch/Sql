@@ -17,5 +17,10 @@ final class WhereTest extends Tester\TestCase {
 		Assert::same('firstname = :firstname', (new Expression\Where('firstname', 'a'))->sql());
 		Assert::same(['firstname' => 'a'], (new Expression\Where('firstname', 'a'))->parameters());
 	}
+
+	public function testTableColumn(): void {
+		Assert::same('users.firstname = :_users__firstname', (new Expression\Where('users.firstname', 'a'))->sql());
+		Assert::same(['_users__firstname' => 'a'], (new Expression\Where('users.firstname', 'a'))->parameters());
+	}
 }
 (new WhereTest())->run();
