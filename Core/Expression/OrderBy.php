@@ -20,10 +20,9 @@ final class OrderBy implements Expression {
 			', ',
 			array_map(
 				static function($column, string $order): string {
-					if (is_int($column)) {
-						return sprintf('%s ASC', $order);
-					}
-					return sprintf('%s %s', $column, strtoupper($order));
+					return is_int($column)
+						? sprintf('%s ASC', $order)
+						: sprintf('%s %s', $column, strtoupper($order));
 				},
 				array_keys($this->orders),
 				$this->orders,

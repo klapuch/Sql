@@ -204,7 +204,7 @@ final class QueryTest extends Tester\TestCase {
 			->offset(2)
 			->exists();
 		Assert::same(
-			'SELECT EXISTS(SELECT 1 FROM world JOIN people ON pid = id WHERE (1=?) GROUP BY firstname HAVING (count(*) > 0))',
+			'SELECT EXISTS (SELECT 1 FROM world JOIN people ON pid = id WHERE (1=?) GROUP BY firstname HAVING (count(*) > 0))',
 			$query->sql(),
 		);
 		Assert::same(['b'], $query->parameters());

@@ -14,7 +14,7 @@ final class Exists implements Expression {
 	}
 
 	public function sql(): string {
-		return sprintf('EXISTS(%s)', $this->statement->sql());
+		return sprintf('EXISTS (%s)', $this->statement->sql());
 	}
 
 	public function parameters(): array {
