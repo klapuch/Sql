@@ -14,7 +14,7 @@ final class From implements Expression {
 	}
 
 	public function sql(): string {
-		return (new Sql\Aliases($this->tables))->sql();
+		return (string) new Sql\Aliases($this->tables);
 	}
 
 	public function parameters(): array {

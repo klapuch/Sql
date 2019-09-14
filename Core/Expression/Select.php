@@ -18,7 +18,7 @@ final class Select implements Expression {
 	}
 
 	public function sql(): string {
-		return (new Sql\Aliases($this->columns))->sql();
+		return (string) new Sql\Aliases($this->columns);
 	}
 
 	public function parameters(): array {

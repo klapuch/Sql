@@ -11,7 +11,7 @@ final class Aliases {
 		$this->list = $list;
 	}
 
-	public function sql(): string {
+	public function __toString(): string {
 		return implode(
 			', ',
 			array_map(
