@@ -11,7 +11,7 @@ abstract class Statement {
 	 */
 	abstract protected function orders(): array;
 
-	public function sql(): string {
+	final public function sql(): string {
 		return implode(
 			' ',
 			array_filter(
@@ -25,7 +25,7 @@ abstract class Statement {
 		);
 	}
 
-	public function parameters(): array {
+	final public function parameters(): array {
 		return array_merge(
 			[],
 			...array_filter(
