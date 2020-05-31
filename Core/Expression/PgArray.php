@@ -12,9 +12,13 @@ final class PgArray implements Expression {
 	/** @var string */
 	private $type;
 
+	/** @var int */
+	private $identifier;
+
 	public function __construct(array $values, string $type) {
 		$this->values = $values;
 		$this->type = strtolower($type);
+		$this->identifier = spl_object_id($this);
 	}
 
 	public function sql(): string {
@@ -31,7 +35,7 @@ final class PgArray implements Expression {
 	private function names(array $values, string $type): array {
 		$names = [];
 		for ($position = 1; $position <= count($values); ++$position) {
-			$name = sprintf('%s__%s__%d__%d', self::IDENTIFIER, $type, spl_object_id($this), $position);
+			$name = sprintf('%s__%s__%d__%d', self::IDENTIFIER, $type, $this->identifier, $position);
 			$names[$name] = sprintf(':%s', $name);
 		}
 		return $names;

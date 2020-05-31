@@ -20,6 +20,12 @@ final class PgArrayTest extends Tester\TestCase {
 		Assert::match('pg_array__text__%d%__3', $key3);
 	}
 
+	public function testMultipleArrayWithDifferentIdentifier(): void {
+		$a = new Expression\PgArray(['a', 'b', 'c'], 'text');
+		$b = new Expression\PgArray(['a', 'b', 'c'], 'text');
+		Assert::notSame($a->sql(), $b->sql());
+	}
+
 	public function testEmpty(): void {
 		Assert::same('ARRAY[]::text[]', (new Expression\PgArray([], 'text'))->sql());
 		Assert::same([], (new Expression\PgArray([], 'text'))->parameters());
