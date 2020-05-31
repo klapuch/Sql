@@ -10,7 +10,7 @@ use Klapuch\Sql\Statement\Statement;
 
 final class Query extends Statement {
 	/** @var array<mixed[]> */
-	private $sql = [];
+	private $sql;
 
 	public function __construct(array $sql = []) {
 		$this->sql = $sql
