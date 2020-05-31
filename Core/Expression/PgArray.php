@@ -3,41 +3,27 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql\Expression;
 
+use Klapuch\Sql\NamedParameters;
+
 final class PgArray implements Expression {
 	private const IDENTIFIER = 'pg_array';
-
-	/** @var mixed[] */
-	private $values;
 
 	/** @var string */
 	private $type;
 
-	/** @var int */
-	private $identifier;
+	/** @var \Klapuch\Sql\NamedParameters */
+	private $parameters;
 
 	public function __construct(array $values, string $type) {
-		$this->values = $values;
 		$this->type = strtolower($type);
-		$this->identifier = spl_object_id($this);
+		$this->parameters = new NamedParameters($values, sprintf('%s__%s__%d', self::IDENTIFIER, $this->type, spl_object_id($this)));
 	}
 
 	public function sql(): string {
-		return sprintf('ARRAY[%s]::%s[]', implode(', ', $this->names($this->values, $this->type)), $this->type);
+		return sprintf('ARRAY[%s]::%s[]', implode(', ', $this->parameters->names()), $this->type);
 	}
 
 	public function parameters(): array {
-		return (array) array_combine(
-			array_keys($this->names($this->values, $this->type)),
-			$this->values,
-		);
-	}
-
-	private function names(array $values, string $type): array {
-		$names = [];
-		for ($position = 1; $position <= count($values); ++$position) {
-			$name = sprintf('%s__%s__%d__%d', self::IDENTIFIER, $type, $this->identifier, $position);
-			$names[$name] = sprintf(':%s', $name);
-		}
-		return $names;
+		return $this->parameters->values();
 	}
 }

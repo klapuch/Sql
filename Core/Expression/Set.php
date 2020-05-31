@@ -6,31 +6,22 @@ namespace Klapuch\Sql\Expression;
 use Klapuch\Sql;
 
 final class Set implements Expression {
-	/** @var mixed[] */
+	/** @var \Klapuch\Sql\NamedParameters */
 	private $assigning;
 
 	public function __construct(array $assigning) {
-		$this->assigning = $assigning;
+		$this->assigning = new Sql\NamedParameters($assigning);
 	}
 
 	public function sql(): string {
-		return implode(
-			', ',
-			array_map(static function (string $column, $value): string {
-				return $value instanceof Sql\Expression\Expression
-					? sprintf('%s = %s', $column, $value->sql())
-					: sprintf('%s = :%s', $column, new Sql\NamedParameter($column));
-			}, array_keys($this->assigning), $this->assigning),
-		);
+		$sql = [];
+		foreach ($this->assigning->names() as $column => $value) {
+			$sql[] = "$column = $value";
+		}
+		return implode(', ', $sql);
 	}
 
 	public function parameters(): array {
-		$values = [];
-		foreach ($this->assigning as $column => $value) {
-			$values += $value instanceof Sql\Expression\Expression
-				? $value->parameters()
-				: [(string) new Sql\NamedParameter($column) => $value];
-		}
-		return $values;
+		return $this->assigning->values();
 	}
 }

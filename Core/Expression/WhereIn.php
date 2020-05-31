@@ -3,40 +3,29 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql\Expression;
 
-use Klapuch\Sql\NamedParameter;
+use Klapuch\Sql\NamedParameters;
 
 final class WhereIn implements Expression {
 	/** @var string */
 	private $column;
 
-	/** @var mixed[] */
+	/** @var \Klapuch\Sql\NamedParameters */
 	private $parameters;
 
 	public function __construct(string $column, array $parameters) {
 		$this->column = $column;
-		$this->parameters = $parameters;
+		$this->parameters = new NamedParameters($parameters, $column);
 	}
 
 	public function sql(): string {
 		return sprintf(
 			'%s IN (%s)',
 			$this->column,
-			implode(', ', self::names($this->column, count($this->parameters))),
+			implode(', ', $this->parameters->names()),
 		);
-	}
-
-	private static function names(string $column, int $parameters): array {
-		$names = [];
-		$column = (string) new NamedParameter($column);
-		for ($i = 1; $i <= $parameters; ++$i)
-			$names[sprintf('%s__%d', $column, $i)] = sprintf(':%s__%d', $column, $i);
-		return $names;
 	}
 
 	public function parameters(): array {
-		return (array) array_combine(
-			array_keys(self::names($this->column, count($this->parameters))),
-			$this->parameters,
-		);
+		return $this->parameters->values();
 	}
 }
