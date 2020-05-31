@@ -4,6 +4,8 @@ declare(strict_types = 1);
 namespace Klapuch\Sql\Clause;
 
 final class Offset implements Clause {
+	private const NO_OFFSET = '';
+
 	/** @var int */
 	private $offset;
 
@@ -12,7 +14,9 @@ final class Offset implements Clause {
 	}
 
 	public function sql(): string {
-		return $this->offset === 0 ? '' : sprintf('OFFSET %d', $this->offset);
+		return $this->offset === 0
+			? self::NO_OFFSET
+			: sprintf('OFFSET %d', $this->offset);
 	}
 
 	public function parameters(): array {
