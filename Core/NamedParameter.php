@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql;
 
-final class PreparedColumn {
+final class NamedParameter {
 	/** @var string */
 	private $column;
 

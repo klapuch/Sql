@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql\Expression;
 
-use Klapuch\Sql\PreparedColumn;
+use Klapuch\Sql\NamedParameter;
 
 final class WhereIn implements Expression {
 	/** @var string */
@@ -27,7 +27,7 @@ final class WhereIn implements Expression {
 
 	private static function names(string $column, int $parameters): array {
 		$names = [];
-		$column = (string) new PreparedColumn($column);
+		$column = (string) new NamedParameter($column);
 		for ($i = 1; $i <= $parameters; ++$i)
 			$names[sprintf('%s__%d', $column, $i)] = sprintf(':%s__%d', $column, $i);
 		return $names;

@@ -19,7 +19,7 @@ final class Set implements Expression {
 			array_map(static function (string $column, $value): string {
 				return $value instanceof Sql\Expression\Expression
 					? sprintf('%s = %s', $column, $value->sql())
-					: sprintf('%s = :%s', $column, new Sql\PreparedColumn($column));
+					: sprintf('%s = :%s', $column, new Sql\NamedParameter($column));
 			}, array_keys($this->assigning), $this->assigning),
 		);
 	}
@@ -29,7 +29,7 @@ final class Set implements Expression {
 		foreach ($this->assigning as $column => $value) {
 			$values += $value instanceof Sql\Expression\Expression
 				? $value->parameters()
-				: [(string) new Sql\PreparedColumn($column) => $value];
+				: [(string) new Sql\NamedParameter($column) => $value];
 		}
 		return $values;
 	}
