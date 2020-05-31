@@ -24,6 +24,7 @@ final class PgArrayTest extends Tester\TestCase {
 		$a = new Expression\PgArray(['a', 'b', 'c'], 'text');
 		$b = new Expression\PgArray(['a', 'b', 'c'], 'text');
 		Assert::notSame($a->sql(), $b->sql());
+		Assert::notSame($a->parameters(), $b->parameters());
 	}
 
 	public function testEmpty(): void {
