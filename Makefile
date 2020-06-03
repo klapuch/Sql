@@ -26,7 +26,7 @@ phpmnd:             ## phpmnd
 .PHONY: phpstan
 phpstan:            ## phpstan
 	vendor/bin/phpstan analyse -l max -c phpstan.neon Core
-	@make phpstan-test --no-print-directory
+	#@make phpstan-test --no-print-directory
 
 .PHONY: phpstan-test
 phpstan-test:

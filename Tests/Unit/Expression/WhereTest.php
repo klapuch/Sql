@@ -14,13 +14,15 @@ require __DIR__ . '/../../bootstrap.php';
  */
 final class WhereTest extends Tester\TestCase {
 	public function testAutoPreparedParameter(): void {
-		Assert::same('firstname = :firstname', (new Expression\Where('firstname', 'a'))->sql());
-		Assert::same(['firstname' => 'a'], (new Expression\Where('firstname', 'a'))->parameters());
+		$where = new Expression\Where('firstname', 'a');
+		Assert::same('firstname = :_1_firstname', $where->sql());
+		Assert::same(['_1_firstname' => 'a'], $where->parameters());
 	}
 
 	public function testTableColumn(): void {
-		Assert::same('users.firstname = :_users__firstname', (new Expression\Where('users.firstname', 'a'))->sql());
-		Assert::same(['_users__firstname' => 'a'], (new Expression\Where('users.firstname', 'a'))->parameters());
+		$where = new Expression\Where('users.firstname', 'a');
+		Assert::same('users.firstname = :_1_users__firstname', $where->sql());
+		Assert::same(['_1_users__firstname' => 'a'], $where->parameters());
 	}
 }
 (new WhereTest())->run();

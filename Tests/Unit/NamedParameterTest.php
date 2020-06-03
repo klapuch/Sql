@@ -13,12 +13,12 @@ require __DIR__ . '/../bootstrap.php';
  */
 final class NamedParameterTest extends Tester\TestCase {
 	public function testTableColumnToPreparedColumns(): void {
-		Assert::same('_users__name', (string) new Sql\NamedParameter('users.name'));
-		Assert::same('_users__name__something', (string) new Sql\NamedParameter('users.name.something'));
+		Assert::same('_1_users__name', (string) new Sql\NamedParameter('users.name'));
+		Assert::same('_2_users__name__something', (string) new Sql\NamedParameter('users.name.something'));
 	}
 
 	public function testKeepingNormalColumns(): void {
-		Assert::same('name', (string) new Sql\NamedParameter('name'));
+		Assert::same('_1_name', (string) new Sql\NamedParameter('name'));
 	}
 }
 (new NamedParameterTest())->run();

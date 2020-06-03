@@ -13,11 +13,12 @@ require __DIR__ . '/../../bootstrap.php';
  */
 final class PgArrayTest extends Tester\TestCase {
 	public function testPreparedArray(): void {
-		Assert::match('ARRAY[:pg_array__text__%d%__1, :pg_array__text__%d%__2, :pg_array__text__%d%__3]::text[]', (new Expression\PgArray(['a', 'b', 'c'], 'text'))->sql());
-		[$key1, $key2, $key3] = array_keys((new Expression\PgArray(['a', 'b', 'c'], 'text'))->parameters());
-		Assert::match('pg_array__text__%d%__1', $key1);
-		Assert::match('pg_array__text__%d%__2', $key2);
-		Assert::match('pg_array__text__%d%__3', $key3);
+		$array = new Expression\PgArray(['a', 'b', 'c'], 'text');
+		Assert::match('ARRAY[:_1_pg_array__text__%d%__1, :_1_pg_array__text__%d%__2, :_1_pg_array__text__%d%__3]::text[]', $array->sql());
+		[$key1, $key2, $key3] = array_keys($array->parameters());
+		Assert::match('_1_pg_array__text__%d%__1', $key1);
+		Assert::match('_1_pg_array__text__%d%__2', $key2);
+		Assert::match('_1_pg_array__text__%d%__3', $key3);
 	}
 
 	public function testMultipleArrayWithDifferentIdentifier(): void {

@@ -9,34 +9,25 @@ final class InsertInto implements Clause {
 	/** @var string */
 	private $table;
 
-	/** @var mixed[] */
-	private $values;
+	/** @var \Klapuch\Sql\NamedParameters */
+	private $parameters;
 
 	public function __construct(string $table, array $values) {
 		$this->table = $table;
-		$this->values = $values;
+		$this->parameters = new Sql\NamedParameters($values);
 	}
 
 	public function sql(): string {
+		$names = $this->parameters->names();
 		return sprintf(
 			'INSERT INTO %s (%s) VALUES (%s)',
 			$this->table,
-			implode(', ', array_keys($this->values)),
-			implode(', ', array_map(static function (string $column, $value): string {
-				return $value instanceof Sql\Expression\Expression
-					? $value->sql()
-					: sprintf(':%s', $column);
-			}, array_keys($this->values), $this->values)),
+			implode(', ', array_keys($names)),
+			implode(', ', $names),
 		);
 	}
 
 	public function parameters(): array {
-		$values = [];
-		foreach ($this->values as $column => $value) {
-			$values += $value instanceof Sql\Expression\Expression
-				? $value->parameters()
-				: [$column => $value];
-		}
-		return $values;
+		return $this->parameters->values();
 	}
 }
