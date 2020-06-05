@@ -15,7 +15,11 @@ final class NamedParameter {
 		++self::$id;
 	}
 
-	public function __toString(): string {
+	public function name(): string {
+		return sprintf(':%s', new Parameter($this->column, self::$id));
+	}
+
+	public function value(): string {
 		return (string) new Parameter($this->column, self::$id);
 	}
 }

@@ -26,10 +26,10 @@ final class Where implements Expression {
 	}
 
 	public function sql(): string {
-		return sprintf('%s = :%s', $this->column, $this->parameter);
+		return sprintf('%s = %s', $this->column, $this->parameter->name());
 	}
 
 	public function parameters(): array {
-		return [(string) $this->parameter => $this->value];
+		return [$this->parameter->value() => $this->value];
 	}
 }
