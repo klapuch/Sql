@@ -24,7 +24,7 @@ final class QueryTest extends Tester\TestCase {
 				->set(new Expression\RawSet('lastname = 2'))
 				->from(new Expression\From(['people']))
 				->where(new Expression\RawWhere('1 = 1'))
-				->returning(new Sql\Clause\Returning(['*']))
+				->returning(new Sql\Command\Returning(['*']))
 				->sql(),
 		);
 	}

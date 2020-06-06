@@ -21,7 +21,7 @@ final class QueryTest extends Tester\TestCase {
 			(new Statement\Delete\Query())
 				->from('world')
 				->where(new Expression\RawWhere('age > 10'))
-				->returning(new Sql\Clause\Returning(['firstname']))
+				->returning(new Sql\Command\Returning(['firstname']))
 				->sql(),
 		);
 	}

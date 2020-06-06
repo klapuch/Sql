@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql\Statement;
 
-use Klapuch\Sql\Clause\Clause;
+use Klapuch\Sql\Command\Command;
 
 abstract class Statement {
 	/**
@@ -16,8 +16,8 @@ abstract class Statement {
 			' ',
 			array_filter(
 				array_map(
-					static function(Clause $clause): string {
-						return $clause->sql();
+					static function(Command $command): string {
+						return $command->sql();
 					},
 					$this->orders(),
 				),
@@ -30,8 +30,8 @@ abstract class Statement {
 			[],
 			...array_filter(
 				array_map(
-					static function(Clause $clause): array {
-						return $clause->parameters();
+					static function(Command $command): array {
+						return $command->parameters();
 					},
 					$this->orders(),
 				),

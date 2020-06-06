@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Klapuch\Sql\Unit\Statement\Select;
 
-use Klapuch\Sql\Clause;
+use Klapuch\Sql\Command;
 use Klapuch\Sql\Expression;
 use Klapuch\Sql\Statement;
 use Tester;
@@ -21,7 +21,7 @@ final class QueryTest extends Tester\TestCase {
 			(new Statement\Select\Query())
 				->select(new Expression\Select(['firstname']))
 				->from(new Expression\From(['world']))
-				->join(new Clause\Join('people', 'pid = id'))
+				->join(new Command\Join('people', 'pid = id'))
 				->where(new Expression\RawWhere('1=1'))
 				->groupBy(new Expression\GroupBy('firstname'))
 				->having(new Expression\Having('count(*) > 0'))
@@ -43,7 +43,7 @@ final class QueryTest extends Tester\TestCase {
 				->having(new Expression\Having('count(*) > 0'))
 				->limit(10)
 				->orderBy(new Expression\OrderBy(['firstname' => 'ASC']))
-				->join(new Clause\Join('people', 'pid = id'))
+				->join(new Command\Join('people', 'pid = id'))
 				->groupBy(new Expression\GroupBy('firstname'))
 				->sql(),
 		);
@@ -53,7 +53,7 @@ final class QueryTest extends Tester\TestCase {
 		$query = (new Statement\Select\Query())
 			->select(new Expression\Select(['firstname', '?'], [666]))
 			->from(new Expression\From(['world']))
-			->join(new Clause\Join('people', 'pid = id'))
+			->join(new Command\Join('people', 'pid = id'))
 			->where((new Expression\RawWhere('firstname = ?', ['no-one']))->and('length(lastname) > ?', [9]))
 			->groupBy(new Expression\GroupBy('firstname'))
 			->having(new Expression\Having('count(*) > ?', [10]))
@@ -72,7 +72,7 @@ final class QueryTest extends Tester\TestCase {
 			->from(new Expression\From(['world']))
 			->select(new Expression\Select(['firstname', '?'], [666]))
 			->where((new Expression\RawWhere('firstname = ?', ['no-one']))->and('length(lastname) > ?', [9]))
-			->join(new Clause\Join('people', 'pid = id'))
+			->join(new Command\Join('people', 'pid = id'))
 			->groupBy(new Expression\GroupBy('firstname'))
 			->limit(10)
 			->offset(2);
@@ -185,8 +185,8 @@ final class QueryTest extends Tester\TestCase {
 			(new Statement\Select\Query())
 				->select(new Expression\Select(['firstname']))
 				->from(new Expression\From(['world']))
-				->join(new Clause\Join('people', 'pid = id'))
-				->join(new Clause\LeftJoin('rest', 'rid = id'))
+				->join(new Command\Join('people', 'pid = id'))
+				->join(new Command\LeftJoin('rest', 'rid = id'))
 				->sql(),
 		);
 	}
@@ -195,7 +195,7 @@ final class QueryTest extends Tester\TestCase {
 		$query = (new Statement\Select\Query())
 			->select(new Expression\Select(['firstname', '?'], ['a']))
 			->from(new Expression\From(['world']))
-			->join(new Clause\Join('people', 'pid = id'))
+			->join(new Command\Join('people', 'pid = id'))
 			->where(new Expression\RawWhere('1=?', ['b']))
 			->groupBy(new Expression\GroupBy('firstname'))
 			->having(new Expression\Having('count(*) > 0'))
